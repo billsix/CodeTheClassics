@@ -21,6 +21,10 @@ Inside `make shell` (`[CONTAINER]`), `PGZERO_MAX_FRAMES=120 python vol2/eggzy/eg
 Outside the container the games need `PYTHONPATH=.` so that they find the `pgzero_gl` package at the repository root.
 Dependencies are pinned in `requirements.txt` and `constraints.txt` (`make update-pins` re-resolves them).
 
+**Display.** The Makefile passes the Wayland socket, `XDG_SESSION_TYPE=wayland`, `PYGLFW_LIBRARY=/usr/lib64/libglfw.so.3` (Fedora's dual
+X11 + Wayland build), `/dev/dri` when present and `XAUTHORITY` when set. Without them PyPI `glfw` picks its X11-only build (it chooses
+from `XDG_SESSION_TYPE`) and fails with "Authorization required" and "X11: Failed to open display".
+
 ## Check a change
 
 ```sh

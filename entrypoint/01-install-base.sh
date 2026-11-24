@@ -21,6 +21,7 @@ dnf install -y --skip-unavailable \
     gcc \
     gcc-c++ \
     git \
+    glfw \
     libatomic \
     libffi-devel \
     make \

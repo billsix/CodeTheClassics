@@ -21,6 +21,8 @@ only dependency outside this repository is `gacalc` (`github.com/billsix/geometr
   grep for `\.(x|y|z)\s*[-+*/]?=` is part of any audit after a bulk edit.
 - **Container:** `make image|shell|shell-exec|run GAME=vol1/boing|check|format|update-pins`; the repository is mounted at `/ctc`, and
   `entrypoint/shell.sh` puts it on `PYTHONPATH` so `pgzero_gl` resolves when a game runs by path.
+- **Display flags** (`Makefile`): `XDG_SESSION_TYPE=wayland`, `PYGLFW_LIBRARY=/usr/lib64/libglfw.so.3` (the `glfw` rpm), the Wayland socket,
+  `XAUTHORITY`, `/dev/dri`. PyPI `glfw` picks its X11-only build when `XDG_SESSION_TYPE` is unset and dies with "Failed to open display".
 - **Python standard:** the portable rules are `runClaudeInContainer/tasks/reference/python-coding-standard.md`
   (github.com/billsix/runClaudeInContainer); a green `make format` is the mechanical tier. Line length is 80, with E501 ignored in
   the games, `pgzero_gl/`, `tools/`.
