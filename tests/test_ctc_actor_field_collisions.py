@@ -21,8 +21,7 @@ import pathlib
 import pytest
 
 _REPO_ROOT: pathlib.Path = pathlib.Path(__file__).resolve().parent.parent
-CTC: pathlib.Path = _REPO_ROOT / "ports" / "codetheclassics"
-GAMES: list[pathlib.Path] = sorted(CTC.glob("vol*/*/*.py"))
+GAMES: list[pathlib.Path] = sorted(_REPO_ROOT.glob("vol*/*/*.py"))
 # Each game that has sprites defines its own Actor (boing does not).
 ACTOR_GAMES: list[pathlib.Path] = [
     game for game in GAMES if "\nclass Actor" in game.read_text()
@@ -109,7 +108,7 @@ def test_no_dataclass_field_shadows_an_actor_property() -> None:
                     and stmt.target.id in props
                 ):
                     offenders.append(
-                        f"{game.relative_to(CTC)}:{stmt.lineno}: "
+                        f"{game.relative_to(_REPO_ROOT)}:{stmt.lineno}: "
                         f"{name}.{stmt.target.id} shadows "
                         f"Actor.{stmt.target.id}"
                     )

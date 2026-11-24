@@ -5,13 +5,13 @@
 # Inlined engine (audio, images, renderer, keyboard, loop):
 #   Copyright (c) 2026 William Emerison Six
 # SPDX-License-Identifier: BSD-2-Clause
-# Full license text: ports/codetheclassics/LICENSE.
+# Full license text: LICENSE.
 """beatstreets -- a side-scrolling beat-em-up of combos, weapons and portals,
 from Code the Classics vol. 2, on GLFW + OpenGL 3.3 core.
 
 One file, read top to bottom like the course's demos. The audio mixer,
 image loading and GL helpers come from the shared
-modelviewprojection.pgzero_gl modules; this file holds the rest: first
+pgzero_gl modules; this file holds the rest: first
 the engine this game needs (a CPU-drawn surface for the intro fade, a
 textured-quad renderer that can draw part of an image and the debug outlines,
 the anchored Actor sprite with rect collision, keyboard and gamepad state),
@@ -60,14 +60,14 @@ from numpy.typing import NDArray
 from PIL import Image as PILImage
 from PIL import ImageDraw, ImageFont
 
-from modelviewprojection.pgzero_gl.audio import Music, Sound, shutdown_audio
-from modelviewprojection.pgzero_gl.gl import (
+from pgzero_gl.audio import Music, Sound, shutdown_audio
+from pgzero_gl.gl import (
     GLBuffer,
     link_program,
     make_buffer,
     ortho_pixels,
 )
-from modelviewprojection.pgzero_gl.resources import Image, Loader
+from pgzero_gl.resources import Image, Loader
 
 # ===== engine: shared state =====
 
@@ -136,7 +136,7 @@ class SpriteRenderer(Protocol):
 # ===== engine: audio =====
 #
 # Sound effects and the music track play through the shared software mixer,
-# modelviewprojection.pgzero_gl.audio (one miniaudio device, best effort:
+# pgzero_gl.audio (one miniaudio device, best effort:
 # silent when no device opens). The game only says where its music/ is.
 
 music: Music = Music(ASSET_ROOT)

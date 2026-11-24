@@ -1,0 +1,11 @@
+__pycache__/
+.ruff_cache/
+.pytest_cache/
+/build/
+/venv/
+*.tar
+# Frame-gate baselines written beside a game while a gate runs
+_baseline_*.py
+# Emacs
+*~
+\#*\#

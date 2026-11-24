@@ -16,12 +16,12 @@
 # working-tree file once, and the PNGs are compared with ImageMagick's AE
 # (absolute-error pixel count) metric. AE=0 on both comparisons is a pass.
 #
-# Runs the captures in the project's own container (the nested mvp image),
+# Runs the captures in the project's own container (the nested codetheclassics image),
 # under the sandbox's Xvfb on :99. The capture itself is tools/ctc_capture_frame.py.
 #
 # Usage (repo root as CWD, `Xvfb :99` running, `make image` built):
 #   tools/ctc_verify_game.sh \
-#       ports/codetheclassics/vol1/boing/boing.py [frame=180] [ref=HEAD]
+#       vol1/boing/boing.py [frame=180] [ref=HEAD]
 # Compare two DIFFERENT working-tree files (e.g. boing.py vs boing_gl1.py):
 #   ... verify_game.sh <a.py> [frame] --against <b.py>
 set -u
@@ -44,16 +44,26 @@ fi
 
 # SIGKILL-bounded: podman ignores SIGTERM, and a wedged Xvfb can hang window
 # creation forever otherwise.
+# BASELINE_SRC (optional): a host directory that contains a `modelviewprojection/` package, put on PYTHONPATH for the
+# BASELINE captures only. It lets a baseline written against the old import path (`modelviewprojection.pgzero_gl`)
+# run beside the working tree that imports `pgzero_gl`; unset for ordinary edits, where the baseline is HEAD.
+src_mount=()
+base_path=/ctc
+if [ -n "${BASELINE_SRC:-}" ]; then
+  src_mount=(-v "$BASELINE_SRC":/baseline-src:z,ro)
+  base_path=/ctc:/baseline-src
+fi
 timeout -s KILL 240 podman run --cgroups=disabled --rm \
   -e DISPLAY=:99 -e PGZERO_MAX_FRAMES="$N" -e CAPTURE_FRAME="$N" \
-  -v /tmp/.X11-unix:/tmp/.X11-unix -v "$(pwd)":/mvp:z -v "$out":/hostout:z \
-  --entrypoint /bin/bash localhost/modelviewprojection:latest -c "
-    source /venv/bin/activate && cd /mvp/$dir
+  -v /tmp/.X11-unix:/tmp/.X11-unix -v "$(pwd)":/ctc:z -v "$out":/hostout:z "${src_mount[@]}" \
+  --entrypoint /bin/bash localhost/codetheclassics:latest -c "
+    source /venv/bin/activate && cd /ctc/$dir
     for pair in $baseline.py:b1 $baseline.py:b2 $base.py:cur; do
       f=\${pair%:*}; o=\${pair#*:}
+      case \$o in cur) export PYTHONPATH=/ctc ;; *) export PYTHONPATH=$base_path ;; esac
       rm -f /hostout/${base}_\$o.png
       CAPTURE_OUT=/hostout/${base}_\$o.png \
-        python /mvp/$capture \$f >/hostout/${base}_\$o.log 2>&1
+        python /ctc/$capture \$f >/hostout/${base}_\$o.log 2>&1
     done
   " >"$out/run_$base.log" 2>&1
 [ -n "$cleanup" ] && rm -f "$cleanup"

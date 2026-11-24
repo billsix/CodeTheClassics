@@ -1,6 +1,6 @@
 # Copyright (c) 2026 William Emerison Six
 # SPDX-License-Identifier: LGPL-2.1-only
-# Full license text: src/modelviewprojection/pgzero_gl/LICENSE.
+# Full license text: pgzero_gl/LICENSE.
 
 """OpenGL 3.3 core helpers the Code-the-Classics renderers call down into.
 
