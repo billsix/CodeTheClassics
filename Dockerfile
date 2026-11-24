@@ -15,3 +15,7 @@ RUN --mount=type=cache,target=/var/cache/libdnf5 \
 # The games' virtual environment (/venv), built from the pinned lock file; the source is bind-mounted, never baked.
 RUN /usr/local/bin/03-install-python.sh /tmp/python/requirements.txt /tmp/python/constraints.txt && \
     rm -r /tmp/python
+
+# The maintainer's shell configuration (prompt, aliases, format on exit), a late layer so editing it rebuilds almost nothing.
+COPY entrypoint/dotfiles/ /root/
+RUN echo "source ~/.extrabashrc" >> ~/.bashrc
