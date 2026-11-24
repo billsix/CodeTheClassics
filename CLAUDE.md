@@ -20,7 +20,9 @@ only dependency outside this repository is `gacalc` (`github.com/billsix/geometr
 - **gacalc vectors are FROZEN**: change a coordinate by rebinding, never in place. `ty` catches `v.x = …` but not `v.x += …`, so a
   grep for `\.(x|y|z)\s*[-+*/]?=` is part of any audit after a bulk edit.
 - **Container:** `make image|shell|shell-exec|run GAME=vol1/boing|check|format|update-pins`; the repository is mounted at `/ctc`, and
-  `entrypoint/shell.sh` puts it on `PYTHONPATH` so `pgzero_gl` resolves when a game runs by path.
+  `entrypoint/shell.sh` puts it on `PYTHONPATH` so `pgzero_gl` resolves when a game runs by path. `make shell` also mounts the host's `~/.tmux.conf`,
+  `~/.gitconfig` and `~/.gnupg` when present, sets the two-line prompt and `GPG_TTY` from `entrypoint/dotfiles/.extrabashrc`, hides the venv name
+  (`VIRTUAL_ENV_DISABLE_PROMPT=1`), and runs `format.sh` from `/ctc` when the shell exits.
 - **Display flags** (`Makefile`): `XDG_SESSION_TYPE=wayland`, `PYGLFW_LIBRARY=/usr/lib64/libglfw.so.3` (the `glfw` rpm), the Wayland socket,
   `XAUTHORITY`, `/dev/dri`. PyPI `glfw` picks its X11-only build when `XDG_SESSION_TYPE` is unset and dies with "Failed to open display".
 - **Python standard:** the portable rules are `runClaudeInContainer/tasks/reference/python-coding-standard.md`
