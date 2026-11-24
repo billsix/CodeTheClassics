@@ -1,0 +1,26 @@
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ty.environment]
+# The games run by path and import the top-level `pgzero_gl` package, which sits at the repository root.
+root = ["."]
+
+[tool.ruff]
+line-length = 80
+
+[tool.ruff.lint]
+select = [
+    "E", "F", "I",
+    "B006", "B007", "B008", "UP007", "UP035",
+    "S311", "S602", "T201",
+    "N",
+]
+
+[tool.ruff.lint.per-file-ignores]
+# The games keep long teaching comments (E501), use game randomness, which is not cryptography (S311), and print
+# diagnostics on purpose (T201). The shared engine package keeps the same latitude as the games.
+"vol*/**" = ["E501", "S311", "T201"]
+"pgzero_gl/**" = ["E501"]
+# Command-line tools: printing diagnostics to stdout is their job.
+"tools/**" = ["E501", "T201"]
+"tasks/adhoc/**" = ["E501", "T201"]

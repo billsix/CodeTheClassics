@@ -1,6 +1,6 @@
 # Copyright (c) 2026 William Emerison Six
 # SPDX-License-Identifier: LGPL-2.1-only
-# Full license text: src/modelviewprojection/pgzero_gl/LICENSE.
+# Full license text: pgzero_gl/LICENSE.
 
 """Images and cached per-folder asset loaders for the Code-the-Classics games.
 

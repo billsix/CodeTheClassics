@@ -1,0 +1,14 @@
+# Direct dependencies of the games. constraints.txt pins the whole resolved set (direct and transitive); regenerate it
+# with `make update-pins`.
+gacalc==0.1.1
+glfw==2.11.0
+ImageIO==2.38.1
+miniaudio==1.71
+numpy==2.5.4
+pillow==13.0.0
+PyOpenGL==3.1.10
+PyOpenGL-accelerate==3.1.10
+# Gates (formatter, linter, type checker)
+pytest==9.2.0
+ruff==0.17.4
+ty==0.0.99

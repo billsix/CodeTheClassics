@@ -5,7 +5,7 @@
 # Inlined engine (audio, images, renderer, keyboard, loop):
 #   Copyright (c) 2026 William Emerison Six
 # SPDX-License-Identifier: BSD-2-Clause
-# Full license text: ports/codetheclassics/LICENSE.
+# Full license text: LICENSE.
 """boing_gl1 -- the OpenGL 1.x (fixed-function) rendering of boing.
 
 A study companion to boing.py: the SAME game, drawn with the OpenGL 1.x
@@ -34,8 +34,8 @@ import glfw
 import OpenGL.GL as GL
 from gacalc.g2 import Vector
 
-from modelviewprojection.pgzero_gl.audio import Music, Sound, shutdown_audio
-from modelviewprojection.pgzero_gl.resources import Image, Loader
+from pgzero_gl.audio import Music, Sound, shutdown_audio
+from pgzero_gl.resources import Image, Loader
 
 # ===== engine: shared state =====
 
@@ -74,7 +74,7 @@ class SpriteRenderer(Protocol):
 # ===== engine: audio =====
 #
 # Sound effects and the music track play through the shared software mixer,
-# modelviewprojection.pgzero_gl.audio (one miniaudio device, best effort:
+# pgzero_gl.audio (one miniaudio device, best effort:
 # silent when no device opens). The game only says where its music/ is.
 
 music: Music = Music(ASSET_ROOT)

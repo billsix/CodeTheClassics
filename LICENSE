@@ -43,10 +43,9 @@ clause. The text is reproduced here exactly as upstream provides it.)
 
 The shared engine modules the games import (audio, image loading, OpenGL
 helpers) are NOT covered by this license. They live in the package at
-src/modelviewprojection/pgzero_gl/, are Copyright (c) 2026 William Emerison
-Six, and are licensed under the GNU Lesser General Public License v2.1 (the
-same license as pygame, which the upstream games import); see
-src/modelviewprojection/pgzero_gl/LICENSE.
+pgzero_gl/, are Copyright (c) 2026 William Emerison Six, and are licensed
+under the GNU Lesser General Public License v2.1 (the same license as
+pygame, which the upstream games import); see pgzero_gl/LICENSE.
 
 ---
 
